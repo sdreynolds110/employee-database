@@ -1,0 +1,24 @@
+{
+  "name": "employee-database",
+  "version": "1.0.0",
+  "description": "An employee database with command line application that adds, views, and updates departments, employees, and roles",
+  "main": "employeetracker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grlucy/employee-database.git"
+  },
+  "author": "Stephen Reynolds",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sdreynolds110/employee-database"
+  },
+  "homepage": "https://github.com/sdreynolds110/employee-database",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "inquirer": "^7.0.4",
+    "mysql": "^2.18.1"
+  }
+}
