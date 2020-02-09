@@ -53,7 +53,7 @@ connection.connect(function (err) {
             addEmployee();
             break;
           case "Remove Employee":
-            removeEmployees();
+            removeEmployee();
             break;
           case "Update Employee Role":
             updateEmployeeRole();
@@ -102,7 +102,6 @@ connection.connect(function (err) {
   
     connection.query(query, function (err, res) {
       if (err) throw err;
-  
       const roleChoices = res.map(({ id, title, salary }) => ({
         value: id, title: `${title}`, salary: `${salary}`
       }));
@@ -155,6 +154,46 @@ connection.connect(function (err) {
   
             firstPrompt();
           });
+      });
+  }
+  function removeEmployee() {
+    console.log("Deleting an employee");
+  
+    var query =
+      `SELECT e.id, e.first_name, e.last_name
+        FROM employee e`
+  
+    connection.query(query, function (err, res) {
+      if (err) throw err;
+      const deleteEmployeeChoices = res.map(({ id, first_name, last_name }) => ({
+        value: id, name: `${id} ${first_name} ${last_name}`
+      }));
+  
+      console.table(res);
+  
+      promptDelete(deleteEmployeeChoices);
+    });
+  }
+  
+  function promptDelete(deleteEmployeeChoices) {
+  
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          name: "employeeId",
+          message: "Which employee do you want to remove?",
+          choices: deleteEmployeeChoices
+        }
+      ])
+      .then(function (answer) {
+        var query = `DELETE FROM employee WHERE ?`;
+        connection.query(query, { id: answer.employeeId }, function (err, res) {
+          if (err) throw err;
+          console.table(res);
+  
+          firstPrompt();
+        });
       });
   }
   
